@@ -65,3 +65,9 @@ insert into policyQuestions values(pol_ques_id_seq.nextval, 103, 103, 'Asset The
 insert into policyQuestions values(pol_ques_id_seq.nextval, 103, 103, 'Liability Coverage', '10000 to 30000', 200, '30001 to 100000', 400, '100001 to 200000', 600);
 
 alter table userrole rename column role_code to rolecode;
+
+alter table accounts drop column business_segment;
+
+alter table policy add business_segment varchar2(30);
+
+commit;
