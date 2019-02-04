@@ -6,7 +6,7 @@ insert into userrole values('user','user','USER123');
 
 create sequence account_number_seq start with 1000000000 increment by 1;
 
-create table accounts(account_number number(10) primary key, insured_name varchar2(30), insured_street varchar2(40), insured_city varchar2(15), insured_state varchar2(15), insured_zip number(5), business_segment varchar2(30), username reference userrole(username));
+create table accounts(account_number number(10) primary key, insured_name varchar2(30), insured_street varchar2(40), insured_city varchar2(15), insured_state varchar2(15), insured_zip number(5), business_segment varchar2(30), username references userrole(username));
 
 create table policy(policy_number number(10) primary key, policy_premium number(8,2), account_number references accounts(account_number));
 
