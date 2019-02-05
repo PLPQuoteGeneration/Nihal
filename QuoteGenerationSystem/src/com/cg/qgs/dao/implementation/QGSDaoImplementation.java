@@ -10,7 +10,9 @@ import java.util.List;
 import com.cg.qgs.dao.QGSDao;
 import com.cg.qgs.dao.QueryMapper;
 import com.cg.qgs.exception.QGSException;
+import com.cg.qgs.model.BusinessSegmentBean;
 import com.cg.qgs.model.LoginBean;
+import com.cg.qgs.model.PolicyBean;
 import com.cg.qgs.utility.JdbcUtility;
 
 public class QGSDaoImplementation implements QGSDao {
@@ -148,37 +150,154 @@ public class QGSDaoImplementation implements QGSDao {
 		} finally {
 			try {
 				preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				try {
 					connection.rollback();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				e.printStackTrace();
+			}
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				try {
+					connection.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return result;
+	}
+
+	@Override
+	public boolean validAccountNumber(Long accountNumber) throws QGSException {
+		boolean validationFlag = false;
+		Long accountNo = 0l;
+		connection = JdbcUtility.getConnection();
+		 List<PolicyBean> list = new ArrayList<>();
+		try {
+			preparedStatement = connection.prepareStatement(QueryMapper.validateAccountNumber);
+			
+			preparedStatement.setLong(1, accountNumber);
+			
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				 accountNo = resultSet.getLong(1);
+				 PolicyBean bean = new PolicyBean();
+				 
+				 bean.setAccountNumber(accountNo);
+				 list.add(bean);
+			}
+			if(!list.isEmpty()) {
+				validationFlag = true;
+			}else {
+				
+				validationFlag = false;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				resultSet.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				preparedStatement.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
 				connection.close();
-				try {
-					connection.rollback();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				try {
-					connection.rollback();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				e.printStackTrace();
-			}
-
+			}	
 		}
-		return result;
+		return validationFlag;
+	}
+
+	@Override
+	public List<BusinessSegmentBean> viewBusinessName() throws QGSException {
+		List<BusinessSegmentBean> list = new ArrayList<>();;
+		
+		connection= JdbcUtility.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(QueryMapper.getBusinessName);
+			
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+			
+				String busId = resultSet.getString(1);
+				String busName = resultSet.getString(3);
+				
+				BusinessSegmentBean bean = new BusinessSegmentBean();
+				bean.setBusinessName(busName);
+				bean.setBusinessId(busId);
+				list.add(bean);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<PolicyBean> getPolicyQuestions(String businessSegment) throws QGSException {
+		List<PolicyBean> list = null;
+		
+		connection = JdbcUtility.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(QueryMapper.getPolicyQuestions);
+			preparedStatement.setString(1, businessSegment);
+			resultSet = preparedStatement.executeQuery();
+			list = new ArrayList<>();
+			while(resultSet.next()) {
+				String policyQuesId = resultSet.getString(1);
+				String question = resultSet.getString(4);
+				String answerOne = resultSet.getString(5);
+				int answerOneWeightage = resultSet.getInt(6);
+				String answerTwo = resultSet.getString(7);
+				int answerTwoWeightage = resultSet.getInt(8);
+				String answerThree = resultSet.getString(9);
+				int answerThreeWeightage = resultSet.getInt(10);
+				
+				PolicyBean bean = new PolicyBean();
+				bean.setPolicyQuestionId(policyQuesId);
+				bean.setQuestion(question);
+				bean.setAnswerOne(answerOne);
+				bean.setAnswerTwo(answerTwo);
+				bean.setAnswerThree(answerThree);
+				bean.setAnsOneWeightage(answerOneWeightage);
+				bean.setAnsTwoWeightage(answerTwoWeightage);
+				bean.setAnsThreeWeightage(answerThreeWeightage);
+				
+				list.add(bean);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 }

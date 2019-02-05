@@ -8,7 +8,9 @@ import java.util.List;
 import com.cg.qgs.dao.QGSDao;
 import com.cg.qgs.dao.implementation.QGSDaoImplementation;
 import com.cg.qgs.exception.QGSException;
+import com.cg.qgs.model.BusinessSegmentBean;
 import com.cg.qgs.model.LoginBean;
+import com.cg.qgs.model.PolicyBean;
 import com.cg.qgs.service.QGSService;
 
 /**
@@ -35,6 +37,24 @@ public class QGSServiceImpl implements QGSService {
 	public int addProfile(LoginBean bean) throws QGSException {
 		// TODO Auto-generated method stub
 		return dao.addProfile(bean);
+	}
+
+	@Override
+	public boolean validAccountNumber(Long accountNumber) throws QGSException {
+		// TODO Auto-generated method stub
+		return dao.validAccountNumber(accountNumber);
+	}
+
+	@Override
+	public List<BusinessSegmentBean> viewBusinessName() throws QGSException {
+		// TODO Auto-generated method stub
+		return dao.viewBusinessName();
+	}
+
+	@Override
+	public List<PolicyBean> getPolicyQuestions(String businessSegment) throws QGSException {
+		// TODO Auto-generated method stub
+		return dao.getPolicyQuestions(businessSegment);
 	}
 
 }
