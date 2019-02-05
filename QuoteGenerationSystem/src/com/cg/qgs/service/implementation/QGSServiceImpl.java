@@ -25,4 +25,16 @@ public class QGSServiceImpl implements QGSService {
 		return dao.loginValid(username,password);
 	}
 
+	@Override
+	public boolean getValidUsername(String userName) throws QGSException {
+		// TODO Auto-generated method stub
+		return dao.getValidUsername(userName);
+	}
+
+	@Override
+	public int addProfile(LoginBean bean) throws QGSException {
+		// TODO Auto-generated method stub
+		return dao.addProfile(bean);
+	}
+
 }

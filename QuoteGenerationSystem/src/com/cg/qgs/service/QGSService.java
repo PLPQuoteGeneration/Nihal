@@ -9,4 +9,8 @@ public interface QGSService {
 
 	List<LoginBean> loginValid(String username, String password) throws QGSException;
 
+	boolean getValidUsername(String userName)throws QGSException;
+
+	int addProfile(LoginBean bean)throws QGSException;
+
 }
