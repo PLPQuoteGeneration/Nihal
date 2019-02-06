@@ -5,7 +5,7 @@ public class PolicyBean {
 	private Long accountNumber;
 	private int buisnessSegement;
 	private Double policyPremium;
-	private int policyNumber;
+	private long policyNumber;
 	private String policyQuestionId;
 	private String businessId;
 	private String question;
@@ -15,7 +15,31 @@ public class PolicyBean {
 	private int ansThreeWeightage;
 	private String answerTwo;
 	private String answerThree;
+	private String questionDetails;
+	private String answerDetails;
 	
+	
+	@Override
+	public String toString() {
+		return "PolicyBean [accountNumber=" + accountNumber + ", buisnessSegement=" + buisnessSegement
+				+ ", policyPremium=" + policyPremium + ", policyNumber=" + policyNumber + ", policyQuestionId="
+				+ policyQuestionId + ", businessId=" + businessId + ", question=" + question + ", answerOne="
+				+ answerOne + ", ansOneWeightage=" + ansOneWeightage + ", ansTwoWeightage=" + ansTwoWeightage
+				+ ", ansThreeWeightage=" + ansThreeWeightage + ", answerTwo=" + answerTwo + ", answerThree="
+				+ answerThree + ", questionDetails=" + questionDetails + ", answerDetails=" + answerDetails + "]";
+	}
+	public String getQuestionDetails() {
+		return questionDetails;
+	}
+	public void setQuestionDetails(String questionDetails) {
+		this.questionDetails = questionDetails;
+	}
+	public String getAnswerDetails() {
+		return answerDetails;
+	}
+	public void setAnswerDetails(String answerDetails) {
+		this.answerDetails = answerDetails;
+	}
 	public Long getAccountNumber() {
 		return accountNumber;
 	}
@@ -34,9 +58,7 @@ public class PolicyBean {
 	public void setPolicyPremium(Double policyPremium) {
 		this.policyPremium = policyPremium;
 	}
-	public int getPolicyNumber() {
-		return policyNumber;
-	}
+	
 	public void setPolicyNumber(int policyNumber) {
 		this.policyNumber = policyNumber;
 	}
@@ -98,9 +120,16 @@ public class PolicyBean {
 	public PolicyBean() {
 		super();
 	}
-	public PolicyBean(Long accountNumber, int buisnessSegement, Double policyPremium, int policyNumber,
+	public long getPolicyNumber() {
+		return policyNumber;
+	}
+	public void setPolicyNumber(long policyNumber) {
+		this.policyNumber = policyNumber;
+	}
+	public PolicyBean(Long accountNumber, int buisnessSegement, Double policyPremium, long policyNumber,
 			String policyQuestionId, String businessId, String question, String answerOne, int ansOneWeightage,
-			int ansTwoWeightage, int ansThreeWeightage, String answerTwo, String answerThree) {
+			int ansTwoWeightage, int ansThreeWeightage, String answerTwo, String answerThree, String questionDetails,
+			String answerDetails) {
 		super();
 		this.accountNumber = accountNumber;
 		this.buisnessSegement = buisnessSegement;
@@ -115,6 +144,8 @@ public class PolicyBean {
 		this.ansThreeWeightage = ansThreeWeightage;
 		this.answerTwo = answerTwo;
 		this.answerThree = answerThree;
+		this.questionDetails = questionDetails;
+		this.answerDetails = answerDetails;
 	}
 	
 }

@@ -57,4 +57,16 @@ public class QGSServiceImpl implements QGSService {
 		return dao.getPolicyQuestions(businessSegment);
 	}
 
+	@Override
+	public long generatePolicy(PolicyBean bean) throws QGSException {
+		
+		return  dao.generatePolicy(bean);
+	}
+
+	@Override
+	public int policyDetails(PolicyBean beans) throws QGSException {
+		// TODO Auto-generated method stub
+		return dao.policyDetails(beans);
+	}
+
 }

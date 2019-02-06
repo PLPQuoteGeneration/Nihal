@@ -300,4 +300,62 @@ public class QGSDaoImplementation implements QGSDao {
 		return list;
 	}
 
+	@Override
+	public long generatePolicy(PolicyBean bean) throws QGSException {
+		long result = 0l;
+		
+		connection = JdbcUtility.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(QueryMapper.generatePolicy);
+			preparedStatement.setDouble(1, bean.getPolicyPremium());
+			preparedStatement.setLong(2, bean.getAccountNumber());
+			preparedStatement.setString(3, bean.getBusinessId());
+			
+			 preparedStatement.executeUpdate();
+			
+			 preparedStatement = connection.prepareStatement(QueryMapper.getPolicyNumber);
+			resultSet =  preparedStatement.executeQuery();
+			 while(resultSet.next()) 
+				 result = resultSet.getLong(1);
+				 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			preparedStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int policyDetails(PolicyBean beans) throws QGSException {
+		int result = 0;
+		connection = JdbcUtility.getConnection();
+		
+		try {
+			preparedStatement = connection.prepareStatement(QueryMapper.insertPolicyDetails);
+			preparedStatement.setLong(1, beans.getPolicyNumber());
+			preparedStatement.setString(2, beans.getQuestionDetails());
+			preparedStatement.setString(3, beans.getAnswerDetails());
+			
+			result = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
+
 }

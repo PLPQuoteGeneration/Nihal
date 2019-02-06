@@ -21,4 +21,8 @@ public interface QGSDao {
 
 	List<PolicyBean> getPolicyQuestions(String businessSegment)throws QGSException;
 
+	long generatePolicy(PolicyBean bean)throws QGSException;
+
+	int policyDetails(PolicyBean beans)throws QGSException;
+
 }
